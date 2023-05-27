@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hufi/views/student_attendance_page.dart';
+import 'package:get/get.dart';
 import 'package:hufi/views/login/login_screen.dart';
 
 void main() {
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
