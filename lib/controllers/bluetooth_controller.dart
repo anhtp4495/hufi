@@ -1,33 +1,28 @@
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:get/get.dart';
+import 'package:hufi/models/bluetooth/bluetooth_factory.dart';
+import 'package:hufi/models/bluetooth/interface_bluetooth.dart';
+import 'package:hufi/models/bluetooth/scan_result.dart';
 
 class BluetoothController extends GetxController {
-  FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
+  IBluetooth bluetooth = BluetoothFactory.createBluetooth();
 
   Future scanDevices() async {
     // Start scanning
-    flutterBlue.startScan(timeout: const Duration(seconds: 10));
-
-    print('startScan');
+    bluetooth.startScan(timeout: const Duration(seconds: 10));
     
     // Listen to scan results
-    var subscription = flutterBlue.scanResults.listen((results) {
+    var subscription = bluetooth.scanResults.listen((results) {
       // do something with scan results
       for (ScanResult r in results) {
-        print('${r.device.name} found! rssi: ${r.rssi}');
+        print('${r.deviceIdentifier} found! rssi: ${r.deviceName}');
       }
     });
     print('subscription: $subscription');
     // Stop scanning
-    flutterBlue.stopScan();
+    bluetooth.stopScan();
   }
 
   // scan result stream
-  Stream<List<ScanResult>> get scanResults => flutterBlue.scanResults;
-
-  // connect to device
-  Future<void> connectToDevice(BluetoothDevice device) async {
-    await device.connect();
-  }
+  Stream<List<ScanResult>> get scanResults => bluetooth.scanResults;
 
 }

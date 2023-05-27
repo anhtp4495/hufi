@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:hufi/controllers/bluetooth_controller.dart';
 import 'package:get/get.dart';
 import 'dart:math';
+
+import 'package:hufi/models/bluetooth/scan_result.dart';
 
 final _random = new Random();
 /**
@@ -17,26 +18,27 @@ class StudentAttendancePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text("Điểm danh",
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold)),
+      ),
       body: GetBuilder<BluetoothController>(
           init: BluetoothController(),
           builder: (controller) {
             return SingleChildScrollView(
               child: Column(
                 children: [
-                  Container(
-                    height: 100,
-                    width: double.infinity,
-                    color: Colors.blue,
-                    child: const Center(
-                      child: Text("HĐ00024 - Quét dọn sân trường",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold
-                        
-                        ),
-                      ),
-                    ),
+                  const Text(
+                    'HĐ00024 - Quét dọn sân trường',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  const Text(
+                    'Sỉ số: 40, Có mặt: x, Vắng mặt: y',
+                    style: TextStyle(fontSize: 18),
                   ),
                   const SizedBox(height: 5 * 3),
                   Center(
@@ -53,7 +55,7 @@ class StudentAttendancePage extends StatelessWidget {
                         ),
                       ),
                       child: const Text(
-                        'Điểm danh',
+                        'Bắt đầu điểm danh',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
@@ -71,17 +73,16 @@ class StudentAttendancePage extends StatelessWidget {
                           shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            final device = snapshot.data![index].device;
+                            final device = snapshot.data![index];
                             return Card(
                               elevation: 2,
                               child: ListTile(
                                 onTap: () {},
                                 title: Text('MSSV: 200517${next(1000, 9999)}'),
-                                subtitle: Text('Thiết bị: ${device.id.id}'),
+                                subtitle: Text(
+                                    'Thiết bị: ${device.deviceIdentifier}'),
                                 trailing: TextButton(
-                                  onPressed: () {
-                                    controller.connectToDevice(device);
-                                  },
+                                  onPressed: () {},
                                   child: const Text('Có mặt'),
                                 ),
                               ),

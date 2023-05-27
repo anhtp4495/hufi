@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hufi/views/student_attendance_page.dart';
+import 'package:hufi/views/login/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: const StudentAttendancePage(),
+      home: const LoginScreen(),
     );
   }
 }
