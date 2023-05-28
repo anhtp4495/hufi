@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:hufi/constants/styles.dart';
+import '/constants/styles.dart';
 
 class LoginScreenTopImage extends StatelessWidget {
   const LoginScreenTopImage({
@@ -12,11 +12,7 @@ class LoginScreenTopImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          "LOGIN",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: defaultPadding * 2),
+        const SizedBox(height: defaultPadding * 2),
         Row(
           children: [
             const Spacer(),
@@ -27,7 +23,7 @@ class LoginScreenTopImage extends StatelessWidget {
             const Spacer(),
           ],
         ),
-        SizedBox(height: defaultPadding * 2),
+        const SizedBox(height: defaultPadding * 2),
       ],
     );
   }

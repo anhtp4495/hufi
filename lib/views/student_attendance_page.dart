@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hufi/controllers/bluetooth_controller.dart';
+import '/controllers/bluetooth_controller.dart';
 import 'package:get/get.dart';
 import 'dart:math';
 
-import 'package:hufi/models/bluetooth/scan_result.dart';
+import '/models/bluetooth/scan_result.dart';
 
 final _random = new Random();
 /**

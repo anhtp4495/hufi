@@ -1,5 +1,5 @@
-import 'package:hufi/models/bluetooth/android_bluetooth.dart';
-import 'package:hufi/models/bluetooth/interface_bluetooth.dart';
+import '/models/bluetooth/android_bluetooth.dart';
+import '/models/bluetooth/interface_bluetooth.dart';
 import 'package:get/get.dart';
 
 class BluetoothFactory {

@@ -1,7 +1,7 @@
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:hufi/models/bluetooth/interface_bluetooth.dart';
+import '/models/bluetooth/interface_bluetooth.dart';
 // ignore: library_prefixes
-import 'package:hufi/models/bluetooth/scan_result.dart' as hufiModel;
+import '/models/bluetooth/scan_result.dart' as hufiModel;
 
 class AndroidBluetooth implements IBluetooth {
   AndroidBluetooth._privateConstructor();

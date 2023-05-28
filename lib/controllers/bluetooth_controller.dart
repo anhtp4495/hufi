@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:hufi/models/bluetooth/bluetooth_factory.dart';
-import 'package:hufi/models/bluetooth/interface_bluetooth.dart';
-import 'package:hufi/models/bluetooth/scan_result.dart';
+import '/models/bluetooth/bluetooth_factory.dart';
+import '/models/bluetooth/interface_bluetooth.dart';
+import '/models/bluetooth/scan_result.dart';
 
 class BluetoothController extends GetxController {
   IBluetooth bluetooth = BluetoothFactory.createBluetooth();

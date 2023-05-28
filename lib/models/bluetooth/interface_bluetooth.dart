@@ -1,4 +1,4 @@
-import 'package:hufi/models/bluetooth/scan_result.dart';
+import '/models/bluetooth/scan_result.dart';
 
 abstract class IBluetooth {
   const IBluetooth();

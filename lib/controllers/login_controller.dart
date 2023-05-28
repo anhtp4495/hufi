@@ -2,17 +2,28 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hufi/constants/api_endpoints.dart';
-import 'package:hufi/views/student_attendance_page.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 // ignore: unused_import
 import 'package:http/http.dart' as http;
+import '/constants/api_endpoints.dart';
+import '/views/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  @override
+  void onReady() async {
+    super.onReady();
+
+    final SharedPreferences prefs = await _prefs;
+    Object? accessToken = prefs.get("access_token");
+    if (accessToken != null) {
+      Get.off(const HomeScreen());
+    }
+  }
 
   Future<void> login() async {
     var headers = {'Content-Type': 'application/json'};
@@ -35,7 +46,7 @@ class LoginController extends GetxController {
         usernameController.clear();
         passwordController.clear();
 
-        Get.off(const StudentAttendancePage());
+        Get.off(const HomeScreen());
       } else {
         throw json["error_message"] ?? "Unknown error occurred";
       }

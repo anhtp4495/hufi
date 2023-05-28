@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hufi/controllers/login_controller.dart';
-import 'package:hufi/constants/styles.dart';
+import '/controllers/login_controller.dart';
+import '/constants/styles.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -25,7 +25,7 @@ class _LoginFormState extends State<LoginForm> {
             cursorColor: kPrimaryColor,
             onSaved: (email) {},
             decoration: const InputDecoration(
-              hintText: "Your email",
+              hintText: "Tài khoản",
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
@@ -40,7 +40,7 @@ class _LoginFormState extends State<LoginForm> {
               obscureText: true,
               cursorColor: kPrimaryColor,
               decoration: const InputDecoration(
-                hintText: "Your password",
+                hintText: "Mật khẩu",
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.lock),
@@ -54,7 +54,7 @@ class _LoginFormState extends State<LoginForm> {
             child: ElevatedButton(
               onPressed: () => loginController.login(),
               child: Text(
-                "Login".toUpperCase(),
+                "Đăng nhập".toUpperCase(),
               ),
             ),
           ),
