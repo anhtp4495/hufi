@@ -1,39 +1,73 @@
 import 'package:flutter/material.dart';
 import '/responsive.dart';
-
 import '/components/background.dart';
 import '/components/login/login_form.dart';
-import '/components/login/login_screen_top_image.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Background(
-      child: SingleChildScrollView(
-        child: Responsive(
-          mobile: const MobileLoginScreen(),
-          desktop: Row(
-            children: [
-              const Expanded(
-                child: LoginScreenTopImage(),
-              ),
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    SizedBox(
-                      width: 450,
-                      child: LoginForm(),
-                    ),
-                  ],
+    return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+        fit: BoxFit.cover,
+        image: AssetImage(
+          'assets/images/login.png',
+        ),
+      )),
+      child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Stack(children: <Widget>[
+            Positioned(
+              child: Align(
+                alignment: FractionalOffset.topCenter,
+                child: Container(
+                  margin: const EdgeInsets.fromLTRB(0, 80, 0, 0),
+                  child: Image.asset(
+                    "assets/images/main_top.png",
+                    width: 160,
+                  ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
+            Positioned(
+                child: Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: Card(
+                margin: const EdgeInsets.fromLTRB(0, 0, 0, 60),
+                elevation: 10,
+                color: Colors.black38,
+                child: Container(
+                  width: 300,
+                  height: 300,
+                  alignment: Alignment.center,
+                  child: Background(
+                    child: SingleChildScrollView(
+                      child: Responsive(
+                        mobile: const MobileLoginScreen(),
+                        desktop: Row(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const [
+                                  SizedBox(
+                                    width: 450,
+                                    child: LoginForm(),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ))
+          ])),
     );
   }
 }
@@ -48,7 +82,6 @@ class MobileLoginScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const LoginScreenTopImage(),
         Row(
           children: const [
             Spacer(),

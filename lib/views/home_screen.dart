@@ -31,11 +31,11 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   final destinations = [
-    const NavigationDestination(
+    const BottomNavigationBarItem(
         icon: Icon(Icons.home_work_outlined), label: "Hoạt động"),
-    const NavigationDestination(
+    const BottomNavigationBarItem(
         icon: Icon(Icons.work_history_outlined), label: "Điểm danh"),
-    const NavigationDestination(
+    const BottomNavigationBarItem(
         icon: Icon(Icons.logout_outlined), label: "Thoát"),
   ];
 
@@ -56,10 +56,17 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        destinations: destinations,
-        selectedIndex: _currentScreenIndex,
-        onDestinationSelected: handleDestinationSelected,
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
+        elevation: 0,
+        onTap: handleDestinationSelected,
+        items: destinations,
+        currentIndex: _currentScreenIndex,
       ),
       body: _screens[_currentScreenIndex],
     );

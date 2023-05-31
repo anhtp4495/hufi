@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 // ignore: unused_import
@@ -55,7 +54,7 @@ class LoginController extends GetxController {
           context: Get.context!,
           builder: (context) {
             return SimpleDialog(
-              title: const Text("Error"),
+              title: Text("Lỗi".toUpperCase()),
               contentPadding: const EdgeInsets.all(20),
               children: [Text(err.toString())],
             );

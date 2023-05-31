@@ -26,11 +26,15 @@ class _LoginFormState extends State<LoginForm> {
             onSaved: (email) {},
             decoration: const InputDecoration(
               hintText: "Tài khoản",
+              hintStyle: TextStyle(color: kPrimaryLightColor),
+              filled: true,
+              fillColor: Colors.black45,
               prefixIcon: Padding(
                 padding: EdgeInsets.all(defaultPadding),
-                child: Icon(Icons.person),
+                child: Icon(Icons.person, color: kPrimaryLightColor),
               ),
             ),
+            style: const TextStyle(color: kPrimaryLightColor),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
@@ -41,11 +45,15 @@ class _LoginFormState extends State<LoginForm> {
               cursorColor: kPrimaryColor,
               decoration: const InputDecoration(
                 hintText: "Mật khẩu",
+                hintStyle: TextStyle(color: kPrimaryLightColor),
+                filled: true,
+                fillColor: Colors.black45,
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+                  child: Icon(Icons.lock, color: kPrimaryLightColor),
                 ),
               ),
+              style: const TextStyle(color: kPrimaryLightColor),
             ),
           ),
           const SizedBox(height: defaultPadding),
@@ -53,12 +61,13 @@ class _LoginFormState extends State<LoginForm> {
             tag: "login_btn",
             child: ElevatedButton(
               onPressed: () => loginController.login(),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.cyan),
               child: Text(
                 "Đăng nhập".toUpperCase(),
+                style: const TextStyle(color: Colors.white),
               ),
             ),
           ),
-          const SizedBox(height: defaultPadding)
         ],
       ),
     );
