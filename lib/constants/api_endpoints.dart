@@ -12,11 +12,13 @@ class ApiEndpoints {
   final String _login = "login";
   final String _token = "token";
   final String _attendance = "diemdanh";
+  final String _activity = "hoatdong";
 
   ApiEndpoints();
 
   String get baseUrl => '$protocol://$domainName/$apiPrefix/$apiVersion';
-  String get tokenUrl => '$baseUrl/$_oauth/$_token';
-  String get loginUrl => '$baseUrl/$_oauth/$_login';
-  String get attendanceUrl => '$baseUrl/$_attendance';
+  String get tokenEndpoint => '$baseUrl/$_oauth/$_token';
+  String get loginEndpoint => '$baseUrl/$_oauth/$_login';
+  String get attendanceEndpoint => '$baseUrl/$_attendance';
+  String get activityEndpoint => '$baseUrl/$_activity';
 }

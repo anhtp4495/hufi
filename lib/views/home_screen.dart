@@ -25,9 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   final List<Widget> _screens = [
-    const _HomeScreen(),
+    const AttendanceManagerScreen(),
     const AttendanceEventScreen(),
-    const AttendanceManagerScreen()
+    const HomeScreen()
   ];
 
   final destinations = [

@@ -26,7 +26,7 @@ class LoginController extends GetxController {
 
   Future<void> login() async {
     var headers = {'Content-Type': 'application/json'};
-    var url = Uri.parse(ApiEndpoints.instance.tokenUrl);
+    var url = Uri.parse(ApiEndpoints.instance.tokenEndpoint);
     Map body = {
       'username': usernameController.text.trim(),
       'password': passwordController.text.trim()
@@ -40,7 +40,7 @@ class LoginController extends GetxController {
         String accesToken = json['access_token'];
 
         final SharedPreferences prefs = await _prefs;
-        prefs.setString("acces_token", accesToken);
+        prefs.setString("access_token", accesToken);
 
         usernameController.clear();
         passwordController.clear();
