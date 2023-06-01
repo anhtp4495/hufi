@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '/components/student_attendance/student_attendance.dart';
 import '/models/diem_danh.dart';
-import '/models/buoi_diem_danh.dart';
-import '/controllers/student_attendance_controller.dart';
 
 class StudentAttendanceItem extends StatelessWidget {
   final int index;
   final DiemDanh diemDanh;
-  final StudentAttendanceController controller;
+  final Function? onPressed;
   const StudentAttendanceItem(
       {Key? key,
-      required this.controller,
       required this.diemDanh,
-      required this.index})
+      required this.index,
+      required this.onPressed})
       : super(key: key);
 
   Color? getColor() {
@@ -35,10 +30,23 @@ class StudentAttendanceItem extends StatelessWidget {
     );
   }
 
+  Icon getTrailingIcon() {
+    if (diemDanh.coMat) {
+      return const Icon(
+        Icons.remove,
+        color: Colors.blueGrey,
+      );
+    }
+
+    return const Icon(
+      Icons.add,
+      color: Colors.blueGrey,
+    );
+  }
+
   void handlePressed() {
-    DiemDanh newDiemDanh = diemDanh;
-    newDiemDanh.coMat = !newDiemDanh.coMat;
-    controller.updateDiemDanh(newDiemDanh);
+    diemDanh.coMat = !diemDanh.coMat;
+    onPressed!();
   }
 
   @override
@@ -56,20 +64,9 @@ class StudentAttendanceItem extends StatelessWidget {
                 Text(diemDanh.maSinhVien),
                 Text(diemDanh.maThietBi),
               ]),
-          trailing: FloatingActionButton.extended(
-            heroTag: '${diemDanh.maSinhVien}.$index',
-            extendedPadding: const EdgeInsets.fromLTRB(2, 0, 4, 0),
-            backgroundColor: Colors.white,
+          trailing: IconButton(
             onPressed: handlePressed,
-            icon: const Icon(
-              Icons.play_arrow,
-              color: Colors.blueAccent,
-              size: 24.0,
-            ),
-            label: const Text(
-              'Điểm danh',
-              style: TextStyle(color: Colors.blueAccent),
-            ),
+            icon: getTrailingIcon(),
           )),
     );
   }

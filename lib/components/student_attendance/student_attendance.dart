@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hufi/models/diem_danh.dart';
-import 'package:hufi/models/sinh_vien.dart';
 import '/controllers/student_attendance_controller.dart';
 import '/components/background.dart';
 import '/components/student_attendance/student_attendance_item.dart';
@@ -17,6 +15,10 @@ class _StudentAttendanceState extends State<StudentAttendance> {
   final StudentAttendanceController studentAttendanceController =
       Get.put(StudentAttendanceController());
 
+  void handlePressed() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return AppbarBackground(
@@ -29,7 +31,7 @@ class _StudentAttendanceState extends State<StudentAttendance> {
                 itemCount: studentAttendanceController.danhSachDiemDanh.length,
                 itemBuilder: (context, index) {
                   return StudentAttendanceItem(
-                      controller: studentAttendanceController,
+                      onPressed: handlePressed,
                       diemDanh:
                           studentAttendanceController.danhSachDiemDanh[index],
                       index: index);

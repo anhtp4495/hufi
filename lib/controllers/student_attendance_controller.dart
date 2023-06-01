@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:get/get.dart';
 // ignore: unused_import
 import 'package:http/http.dart' as http;
-import 'package:hufi/models/diem_danh.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '/models/diem_danh.dart';
 import '/models/sinh_vien.dart';
 import '/constants/api_endpoints.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class StudentAttendanceController extends GetxController {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
@@ -27,7 +27,6 @@ class StudentAttendanceController extends GetxController {
   }
 
   void updateDiemDanh(DiemDanh diemDanh) {
-    print('mssv: ${diemDanh.maSinhVien}');
     int index = danhSachDiemDanh
         .indexWhere((ele) => ele.maSinhVien == diemDanh.maSinhVien);
     if (index > -1) {
