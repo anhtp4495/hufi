@@ -26,13 +26,12 @@ class _StudentAttendanceState extends State<StudentAttendance> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return ListView.builder(
-                itemCount: snapshot.data!.length,
+                itemCount: studentAttendanceController.danhSachDiemDanh.length,
                 itemBuilder: (context, index) {
-                  SinhVien sv = snapshot.data![index];
                   return StudentAttendanceItem(
                       controller: studentAttendanceController,
-                      demDanh: DiemDanh(sv.maSinhVien, sv.tenSinhVien,
-                          sv.danhSachThietBi[0], false, null),
+                      diemDanh:
+                          studentAttendanceController.danhSachDiemDanh[index],
                       index: index);
                 },
               );

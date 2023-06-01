@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 // ignore: unused_import
 import 'package:http/http.dart' as http;
+import 'package:hufi/models/diem_danh.dart';
 import '/models/sinh_vien.dart';
 import '/constants/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,6 +11,7 @@ class StudentAttendanceController extends GetxController {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   bool loading = true;
   List<SinhVien> _danhSachSinhVien = [];
+  List<DiemDanh> danhSachDiemDanh = [];
 
   @override
   void onInit() async {
@@ -17,7 +19,20 @@ class StudentAttendanceController extends GetxController {
     loading = true;
 
     _danhSachSinhVien = await getDanhSachSinhVien();
+    danhSachDiemDanh = _danhSachSinhVien
+        .map<DiemDanh>((sv) => DiemDanh(
+            sv.maSinhVien, sv.tenSinhVien, sv.danhSachThietBi[0], false, null))
+        .toList();
     loading = false;
+  }
+
+  void updateDiemDanh(DiemDanh diemDanh) {
+    print('mssv: ${diemDanh.maSinhVien}');
+    int index = danhSachDiemDanh
+        .indexWhere((ele) => ele.maSinhVien == diemDanh.maSinhVien);
+    if (index > -1) {
+      danhSachDiemDanh[index] = diemDanh;
+    }
   }
 
   Future<List<SinhVien>> getDanhSachSinhVien() async {

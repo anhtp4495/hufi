@@ -8,12 +8,12 @@ import '/controllers/student_attendance_controller.dart';
 
 class StudentAttendanceItem extends StatelessWidget {
   final int index;
-  final DiemDanh demDanh;
+  final DiemDanh diemDanh;
   final StudentAttendanceController controller;
   const StudentAttendanceItem(
       {Key? key,
       required this.controller,
-      required this.demDanh,
+      required this.diemDanh,
       required this.index})
       : super(key: key);
 
@@ -21,7 +21,25 @@ class StudentAttendanceItem extends StatelessWidget {
     return Colors.greenAccent;
   }
 
-  void handlePressed() {}
+  Icon getLeadingIcon() {
+    if (diemDanh.coMat) {
+      return const Icon(
+        Icons.check_circle_rounded,
+        color: Colors.greenAccent,
+      );
+    }
+
+    return const Icon(
+      Icons.radio_button_unchecked_outlined,
+      color: Colors.redAccent,
+    );
+  }
+
+  void handlePressed() {
+    DiemDanh newDiemDanh = diemDanh;
+    newDiemDanh.coMat = !newDiemDanh.coMat;
+    controller.updateDiemDanh(newDiemDanh);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +47,17 @@ class StudentAttendanceItem extends StatelessWidget {
       margin: const EdgeInsets.all(4),
       color: Colors.white,
       child: ListTile(
-          title: Text(demDanh.tenSinhVien),
+          leading: getLeadingIcon(),
+          title: Text(diemDanh.tenSinhVien),
           subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(demDanh.maSinhVien),
-                Text(demDanh.maThietBi),
+                Text(diemDanh.maSinhVien),
+                Text(diemDanh.maThietBi),
               ]),
           trailing: FloatingActionButton.extended(
-            heroTag: '${demDanh.maSinhVien}.$index',
+            heroTag: '${diemDanh.maSinhVien}.$index',
             extendedPadding: const EdgeInsets.fromLTRB(2, 0, 4, 0),
             backgroundColor: Colors.white,
             onPressed: handlePressed,
