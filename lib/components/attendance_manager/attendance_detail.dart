@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hufi/models/buoi_diem_danh.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '/components/student_attendance/student_attendance.dart';
 import '/controllers/attendance_detail_controller.dart';
 import '/components/background.dart';
 import '/models/hoat_dong.dart';
+import '/models/buoi_diem_danh.dart';
 
 class _AttendanceDetailItem extends StatelessWidget {
   final BuoiDiemDanh buoiDiemDanh;
   const _AttendanceDetailItem({Key? key, required this.buoiDiemDanh})
       : super(key: key);
 
-  handlePressed() {
-    //Get.to(AttendanceDetail(hoatDong: buoiDiemDanh));
+  handlePressed() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('ma_buoi_hoat_dong', buoiDiemDanh.maBuoi);
+    Get.to(const StudentAttendance());
   }
 
   @override
@@ -25,11 +29,11 @@ class _AttendanceDetailItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(
-                    'Ngày: ${buoiDiemDanh.thoiGianBatDau}'),
+                Text('Ngày: ${buoiDiemDanh.thoiGianBatDau}'),
                 Text('Sỉ số: ${buoiDiemDanh.siSo}'),
               ]),
           trailing: FloatingActionButton.extended(
+            heroTag: '${buoiDiemDanh.maBuoi}',
             extendedPadding: const EdgeInsets.fromLTRB(2, 0, 4, 0),
             backgroundColor: Colors.white,
             onPressed: handlePressed,

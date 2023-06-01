@@ -13,7 +13,8 @@ class ApiEndpoints {
   final String _token = "token";
   final String _attendance = "diemdanh";
   final String _activity = "hoatdong";
-  final String _activitySession = "danhsachbuoi";
+  final String _sessionList = "danhsachbuoi";
+  final String _studentList = "danhsachsinhvien";
 
   ApiEndpoints();
 
@@ -22,5 +23,6 @@ class ApiEndpoints {
   String get loginEndpoint => '$baseUrl/$_oauth/$_login';
   String get attendanceEndpoint => '$baseUrl/$_attendance';
   String get activityEndpoint => '$baseUrl/$_activity';
-  String get activitySessionEndpoint => '$baseUrl/$_activity/$_activitySession';
+  String get activitySessionEndpoint => '$baseUrl/$_activity/$_sessionList';
+  String get studentAttendanceEndpoint => '$baseUrl/$_activity/$_studentList';
 }
