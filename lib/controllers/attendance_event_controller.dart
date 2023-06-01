@@ -45,6 +45,7 @@ class AttendanceEventController extends GetxController {
                 element["MaHoatDong"],
                 element["MaBuoi"],
                 element["LoaiBuoi"],
+                element["SiSo"],
                 element["TenBuoi"],
                 element["ThoiGianBatDau"],
                 element["ThoiGianKetThuc"]))

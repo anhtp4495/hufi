@@ -3,18 +3,17 @@ import 'package:get/get.dart';
 // ignore: unused_import
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import '/models/hoat_dong.dart';
+import '/models/buoi_diem_danh.dart';
 import '/constants/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AttendanceManagerController extends GetxController {
+class AttendanceDetailController extends GetxController {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   String _accessToken = "";
   bool loading = false;
-  List<HoatDong> danhSachHoatDong = [];
 
-  Future<void> getDanhSachHoatDong() async {
-    danhSachHoatDong.clear();
+  Future<List<BuoiDiemDanh>> getDanhSachHoatDong(int maHoatDong) async {
+    List<BuoiDiemDanh> danhSachBuoiDiemDanh = [];
     loading = true;
     final SharedPreferences prefs = await _prefs;
     Object? accessToken = prefs.get("access_token");
@@ -28,28 +27,25 @@ class AttendanceManagerController extends GetxController {
     };
     DateTime now = DateTime.now();
     final queryParameters = {
-      //'NgayBatDau': '${DateFormat('dd-MM-yyyy').format(now)} 00:00:00',
-      'NgayKetThuc':
-          '${DateFormat('dd-MM-yyyy').format(now.add(const Duration(days: 7)))} 00:00:00',
+      'MaHoatDong': maHoatDong.toString(),
+      'ThoiGianBatDau': '${DateFormat('dd-MM-yyyy').format(now)} 00:00:00',
     };
 
-    var url = Uri.parse(ApiEndpoints.instance.activityEndpoint)
+    var url = Uri.parse(ApiEndpoints.instance.activitySessionEndpoint)
         .replace(queryParameters: queryParameters);
-    print(url);
+    print('URL: $url');
     try {
       http.Response response = await http.get(url, headers: headers);
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
-        List<dynamic> elements = json["danh_sach_hoat_dong"];
-        danhSachHoatDong = elements
-            .map<HoatDong>((element) => HoatDong(
-                element["Id"],
+        List<dynamic> elements = json["danh_sach_buoi"];
+        danhSachBuoiDiemDanh = elements
+            .map<BuoiDiemDanh>((element) => BuoiDiemDanh(
                 element["MaHoatDong"],
-                element["TieuDe"],
-                element["NoiDung"],
-                element["NguoiTao"],
-                element["Khoa"],
-                element["DiaDiem"],
+                element["MaBuoi"],
+                element["LoaiBuoi"],
+                element["SiSo"],
+                element["TenBuoi"],
                 element["ThoiGianBatDau"],
                 element["ThoiGianKetThuc"]))
             .toList();
@@ -61,5 +57,6 @@ class AttendanceManagerController extends GetxController {
       print('ERROR: ${err.toString()}');
     }
     loading = true;
+    return danhSachBuoiDiemDanh;
   }
 }

@@ -24,12 +24,13 @@ class _AttendanceEventState extends State<AttendanceEvent> {
           builder: (context, snapshot) {
             if (attendanceEventController.loading) {
               return ListView.builder(
-                itemCount: attendanceEventController.danhSachBuoiDiemDanh.length,
+                itemCount:
+                    attendanceEventController.danhSachBuoiDiemDanh.length,
                 itemBuilder: (context, index) {
                   return AttendanceEventItem(
                       index: index,
-                      hoatDong:
-                          attendanceEventController.danhSachBuoiDiemDanh[index]);
+                      buoiDiemDanh: attendanceEventController
+                          .danhSachBuoiDiemDanh[index]);
                 },
               );
             } else if (snapshot.hasError) {
