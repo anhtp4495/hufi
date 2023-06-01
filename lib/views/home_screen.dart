@@ -5,15 +5,6 @@ import '/views/attendance_manager_screen.dart';
 import 'package:get/get.dart';
 import '/views/login/login_screen.dart';
 
-class _HomeScreen extends StatelessWidget {
-  const _HomeScreen();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Text("Trang chủ");
-  }
-}
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 

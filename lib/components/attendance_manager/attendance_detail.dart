@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '/components/appbar_background.dart';
+import '/components/background.dart';
 import '/models/hoat_dong.dart';
 
 class AttendanceDetail extends StatelessWidget {

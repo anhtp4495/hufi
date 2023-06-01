@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hufi/components/attendance_manager/attendance_item.dart';
-import 'package:hufi/controllers/attendance_manager_controller.dart';
+import 'package:hufi/controllers/attendance_event_controller.dart';
 
 import '/components/background.dart';
 
-class AttendanceManagerList extends StatefulWidget {
-  const AttendanceManagerList({Key? key}) : super(key: key);
+class AttendanceEvent extends StatefulWidget {
+  const AttendanceEvent({Key? key}) : super(key: key);
 
   @override
-  State<AttendanceManagerList> createState() => _AttendanceManagerListState();
+  State<AttendanceEvent> createState() => _AttendanceEventState();
 }
 
-class _AttendanceManagerListState extends State<AttendanceManagerList> {
-  final AttendanceManagerController attendanceManagerController =
-      Get.put(AttendanceManagerController());
+class _AttendanceEventState extends State<AttendanceEvent> {
+  final AttendanceEventController attendanceEventController =
+      Get.put(AttendanceEventController());
 
   @override
   Widget build(BuildContext context) {
     return AppbarBackground(
-        title: "Danh sách hoạt động",
+        title: "Điểm danh",
         child: FutureBuilder(
-          future: attendanceManagerController.getDanhSachHoatDong(),
+          future: attendanceEventController.getDanhSachHoatDong(),
           builder: (context, snapshot) {
-            if (attendanceManagerController.loading) {
+            if (attendanceEventController.loading) {
               return ListView.builder(
-                itemCount: attendanceManagerController.danhSachHoatDong.length,
+                itemCount: attendanceEventController.danhSachHoatDong.length,
                 itemBuilder: (context, index) {
                   return AttendanceItem(
                       index: index,
                       hoatDong:
-                          attendanceManagerController.danhSachHoatDong[index]);
+                          attendanceEventController.danhSachHoatDong[index]);
                 },
               );
             } else if (snapshot.hasError) {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '/responsive.dart';
-import '/components/background.dart';
+import '/components/login/login_background.dart';
 import '/components/login/login_form.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                   width: 300,
                   height: 300,
                   alignment: Alignment.center,
-                  child: Background(
+                  child: LoginBackground(
                     child: SingleChildScrollView(
                       child: Responsive(
                         mobile: const MobileLoginScreen(),

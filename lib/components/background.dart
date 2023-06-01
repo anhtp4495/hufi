@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
-class Background extends StatelessWidget {
+class AppbarBackground extends StatelessWidget {
   final Widget child;
-  const Background({Key? key, required this.child}) : super(key: key);
+  final String title;
+  const AppbarBackground({Key? key, required this.child, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.transparent,
-      body: SizedBox(
-        width: double.infinity,
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            SafeArea(child: child),
-          ],
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: Text(
+            title,
+            style: const TextStyle(
+                color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: false,
         ),
-      ),
-    );
+        body: child,
+        backgroundColor: Colors.grey.shade200);
   }
 }

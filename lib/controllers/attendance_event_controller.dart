@@ -7,7 +7,7 @@ import '/models/hoat_dong.dart';
 import '/constants/api_endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class AttendanceManagerController extends GetxController {
+class AttendanceEventController extends GetxController {
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   String _accessToken = "";
   bool loading = false;
