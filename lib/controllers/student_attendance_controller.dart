@@ -73,7 +73,7 @@ class StudentAttendanceController extends GetxController {
           danhSachThietBi.add(r.deviceIdentifier);
           if (!_updateDiemDanh(
               _findSinhVien(r.deviceIdentifier), r.deviceIdentifier)) {
-            danhSachDiemDanh.add(DiemDanh("maSinhVien", "tenSinhVien",
+            danhSachDiemDanh.add(DiemDanh('...', 'Chưa xác định',
                 r.deviceIdentifier, false, DateTime.now()));
           }
         }
@@ -152,7 +152,7 @@ class StudentAttendanceController extends GetxController {
       'Authorization': 'Bearer $accessToken'
     };
     final body = {
-      'danhSachDiemDanh': danhSachDiemDanh,
+      'danhSachDiemDanh': danhSachDiemDanh.toString(),
     };
 
     var url = Uri.parse(ApiEndpoints.instance.attendanceEndpoint);
