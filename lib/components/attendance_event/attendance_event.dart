@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hufi/components/attendance_manager/attendance_item.dart';
-import 'package:hufi/controllers/attendance_event_controller.dart';
-
+import '/components/attendance_event/attendance_event_item.dart';
+import '/controllers/attendance_event_controller.dart';
 import '/components/background.dart';
 
 class AttendanceEvent extends StatefulWidget {
@@ -25,12 +24,12 @@ class _AttendanceEventState extends State<AttendanceEvent> {
           builder: (context, snapshot) {
             if (attendanceEventController.loading) {
               return ListView.builder(
-                itemCount: attendanceEventController.danhSachHoatDong.length,
+                itemCount: attendanceEventController.danhSachBuoiDiemDanh.length,
                 itemBuilder: (context, index) {
-                  return AttendanceItem(
+                  return AttendanceEventItem(
                       index: index,
                       hoatDong:
-                          attendanceEventController.danhSachHoatDong[index]);
+                          attendanceEventController.danhSachBuoiDiemDanh[index]);
                 },
               );
             } else if (snapshot.hasError) {
