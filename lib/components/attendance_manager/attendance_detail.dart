@@ -8,13 +8,16 @@ import '/models/hoat_dong.dart';
 import '/models/buoi_diem_danh.dart';
 
 class _AttendanceDetailItem extends StatelessWidget {
+  final String maHoatDong;
   final BuoiDiemDanh buoiDiemDanh;
-  const _AttendanceDetailItem({Key? key, required this.buoiDiemDanh})
+  const _AttendanceDetailItem({Key? key, required this.buoiDiemDanh, required this.maHoatDong})
       : super(key: key);
 
   handlePressed() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('ma_hoat_dong', maHoatDong);
     prefs.setInt('ma_buoi_hoat_dong', buoiDiemDanh.maBuoi);
+    prefs.setString('ten_buoi_hoat_dong', buoiDiemDanh.tenBuoi);
     Get.to(const StudentAttendance());
   }
 
@@ -96,6 +99,7 @@ class _AttendanceDetailState extends State<AttendanceDetail> {
                     itemCount: snapshot.data?.length,
                     itemBuilder: (context, index) {
                       return _AttendanceDetailItem(
+                        maHoatDong: widget.hoatDong.maHoatDong,
                         buoiDiemDanh: snapshot.data![index],
                       );
                     },

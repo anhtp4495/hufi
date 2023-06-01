@@ -14,6 +14,7 @@ class AttendanceEventItem extends StatelessWidget {
   handlePressed() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setInt('ma_buoi_hoat_dong', buoiDiemDanh.maBuoi);
+    prefs.setString('ten_buoi_hoat_dong', buoiDiemDanh.tenBuoi);
     Get.to(const StudentAttendance());
   }
 

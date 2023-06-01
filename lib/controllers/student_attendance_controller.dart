@@ -6,24 +6,90 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '/models/diem_danh.dart';
 import '/models/sinh_vien.dart';
 import '/constants/api_endpoints.dart';
+import '/models/bluetooth/bluetooth_factory.dart';
+import '/models/bluetooth/interface_bluetooth.dart';
+import '/models/bluetooth/scan_result.dart';
 
 class StudentAttendanceController extends GetxController {
+  final IBluetooth bluetooth = BluetoothFactory.createBluetooth();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   bool loading = true;
+  bool scanning = false;
   List<SinhVien> _danhSachSinhVien = [];
   List<DiemDanh> danhSachDiemDanh = [];
+  List<String> danhSachThietBi = [];
 
   @override
   void onInit() async {
     super.onInit();
     loading = true;
+    scanning = false;
 
     _danhSachSinhVien = await getDanhSachSinhVien();
     danhSachDiemDanh = _danhSachSinhVien
-        .map<DiemDanh>((sv) => DiemDanh(
-            sv.maSinhVien, sv.tenSinhVien, sv.danhSachThietBi[0], false, null))
+        .map<DiemDanh>((sv) =>
+            DiemDanh(sv.maSinhVien, sv.tenSinhVien, '::::', false, null))
         .toList();
     loading = false;
+  }
+
+  String _findSinhVien(maThietBi) {
+    int index = _danhSachSinhVien.indexWhere((ele) =>
+        ele.danhSachThietBi.indexWhere((ele) => ele == maThietBi) != -1);
+    if (index != -1) {
+      return _danhSachSinhVien[index].maSinhVien;
+    }
+    return "";
+  }
+
+  bool _updateDiemDanh(maSinhVien, maThietBi) {
+    int index =
+        danhSachDiemDanh.indexWhere((ele) => ele.maSinhVien == maSinhVien);
+    if (index != -1) {
+      danhSachDiemDanh[index].maThietBi = maThietBi;
+      danhSachDiemDanh[index].coMat = true;
+      danhSachDiemDanh[index].thoiGian = DateTime.now();
+      return true;
+    }
+
+    return false;
+  }
+
+  Future startScan(Function updateState) async {
+    scanning = true;
+    print('Start scanning!');
+    // Start scanning
+    bluetooth.startScan(timeout: const Duration(seconds: 10));
+
+    // Listen to scan results
+    bluetooth.scanResults.listen((results) {
+      // do something with scan results
+      bool shouldUpdated = false;
+      for (ScanResult r in results) {
+        int thietBiIndex =
+            danhSachThietBi.indexWhere((ele) => ele == r.deviceIdentifier);
+        if (thietBiIndex == -1) {
+          shouldUpdated = true;
+          danhSachThietBi.add(r.deviceIdentifier);
+          if (!_updateDiemDanh(
+              _findSinhVien(r.deviceIdentifier), r.deviceIdentifier)) {
+            danhSachDiemDanh.add(DiemDanh("maSinhVien", "tenSinhVien",
+                r.deviceIdentifier, false, DateTime.now()));
+          }
+        }
+      }
+
+      if (shouldUpdated) {
+        updateState();
+      }
+    });
+  }
+
+  Future stopScan() async {
+    scanning = false;
+    print('Stop scanning!');
+    // Stop scanning
+    await bluetooth.stopScan();
   }
 
   void updateDiemDanh(DiemDanh diemDanh) {
@@ -74,5 +140,49 @@ class StudentAttendanceController extends GetxController {
     }
 
     return danhSachSinhVien;
+  }
+
+  Future<void> dongBoDuLieuDiemDanh() async {
+    final SharedPreferences prefs = await _prefs;
+    String? accessToken = prefs.getString("access_token");
+    int? maBuoiHoatDong = prefs.getInt("ma_buoi_hoat_dong");
+
+    var headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+    final body = {
+      'danhSachDiemDanh': danhSachDiemDanh,
+    };
+
+    var url = Uri.parse(ApiEndpoints.instance.attendanceEndpoint);
+    print('URL: $url');
+    try {
+      http.Response response =
+          await http.post(url, body: jsonEncode(body), headers: headers);
+      print('statusCode: ${response.statusCode}');
+    } catch (err) {
+      print('ERROR: ${err.toString()}');
+    }
+  }
+
+  Future<String> getTenBuoiHoatDong() async {
+    final SharedPreferences prefs = await _prefs;
+    String? maHoatDong = prefs.getString('ma_hoat_dong');
+    String? tenBuoiHoatDong = prefs.getString('ten_buoi_hoat_dong');
+    return '$maHoatDong $tenBuoiHoatDong';
+  }
+
+  Future<String> getThongTinDiemDanh() async {
+    int siso = _danhSachSinhVien.length;
+    if (loading) {
+      var danhSachSinhVien = await getDanhSachSinhVien();
+      siso = danhSachSinhVien.length;
+    }
+    int comat = danhSachDiemDanh.where((diemdanh) => diemdanh.coMat).length;
+    int vang = siso - comat;
+    vang = vang > 0 ? vang : 0;
+
+    return 'Sỉ số: $siso, Có mặt: $comat, Vắng: $vang';
   }
 }
